@@ -22,10 +22,10 @@
     <groupId>co.rsk.bitcoinj</groupId>
     <version>0.14.4-rsk-5</version>
 
-    <artifactId>bitcoinj-thin</artifactId>
+    <artifactId>bitcorej-thin</artifactId>
 
-    <name>bitcoinj-thin</name>
-    <description>RSK bitcoinj thin library</description>
+    <name>bitcorej-thin</name>
+    <description>RSK bitcorej thin library</description>
 
     <packaging>jar</packaging>
 

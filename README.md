@@ -1,9 +1,9 @@
 [![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/bitcoinj.png)](https://kiwiirc.com/client/irc.freenode.net/bitcoinj)
 
-### Welcome to bitcoinj
+### Welcome to bitcorej
 
-The bitcoinj library is a Java implementation of the Bitcoin protocol, which allows it to maintain a wallet and send/receive transactions without needing a local copy of Bitcoin Core. It comes with full documentation and some example apps showing how to use it.
-RSK made a "thin" version of bitcoinj including just the components needed by the RSK node.
+The bitcorej library is a Java implementation of the Bitcore protocol, which allows it to maintain a wallet and send/receive transactions without needing a local copy of Bitcoin Core. It comes with full documentation and some example apps showing how to use it.
+RSK made a "thin" version of bitcoinj - bitcorej-thin based on the bitcoinj-thin library - including just the components needed by the RSK node.
 
 ### Technologies
 

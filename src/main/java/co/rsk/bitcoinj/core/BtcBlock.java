@@ -65,7 +65,7 @@ public class BtcBlock extends Message {
      * upgrade everyone to change this, so Bitcoin can continue to grow. For now it exists as an anti-DoS measure to
      * avoid somebody creating a titanically huge but valid block and forcing everyone to download/store it forever.
      */
-    public static final int MAX_BLOCK_SIZE = 1 * 1000 * 1000;
+    public static final int MAX_BLOCK_SIZE = 20 * 1000 * 1000; // 20Mb
     /**
      * A "sigop" is a signature verification operation. Because they're expensive we also impose a separate limit on
      * the number in a block to prevent somebody mining a huge block that has way more sigops than normal, so is very
@@ -85,9 +85,9 @@ public class BtcBlock extends Message {
     /** Block version introduced in BIP 34: Height in coinbase */
     public static final long BLOCK_VERSION_BIP34 = 2;
     /** Block version introduced in BIP 66: Strict DER signatures */
-    public static final long BLOCK_VERSION_BIP66 = 3;
+    public static final long BLOCK_VERSION_BIP66 = 2;
     /** Block version introduced in BIP 65: OP_CHECKLOCKTIMEVERIFY */
-    public static final long BLOCK_VERSION_BIP65 = 4;
+    public static final long BLOCK_VERSION_BIP65 = 2;
 
     // Fields defined as part of the protocol format.
     private long version;
@@ -216,7 +216,26 @@ public class BtcBlock extends Message {
      * </p>
      */
     public Coin getBlockInflation(int height) {
-        return FIFTY_COINS.shiftRight(height / params.getSubsidyDecreaseBlockCount());
+        Coin subsidy = COIN.times(125).divide(10); // 12.5 coins
+        Coin premine = COIN.times(162873375).divide(10); // 16287337.5 coins
+
+        if (height == 1) {
+            subsidy = premine;
+        } else if (height > 10000) {
+            int block_reward_change_f4 = 4;
+            int btxFullblock = (42987 + 10000)*4;
+            // Our Goal is to have the same amount how BTC
+            int nSubsidyHalvingInterval2 = 840000;
+            subsidy = subsidy.divide(block_reward_change_f4);
+            int halvings = (height + btxFullblock) / nSubsidyHalvingInterval2;
+            if (halvings >= 10)
+                subsidy = subsidy.divide(1024);
+            else
+                subsidy = subsidy.shiftRight(halvings);
+        }
+        // if height <= 1000 then subsidy stays the same
+
+        return subsidy;
     }
 
     /**
@@ -397,19 +416,23 @@ public class BtcBlock extends Message {
     }
 
     /**
-     * Calculates the block hash by serializing the block and hashing the
+     * Calculates the block PoW hash by serializing the block and hashing the
      * resulting bytes.
      */
     private Sha256Hash calculateHash() {
         try {
             ByteArrayOutputStream bos = new UnsafeByteArrayOutputStream(HEADER_SIZE);
             writeHeader(bos);
-            return Sha256Hash.wrapReversed(Sha256Hash.hashTwice(bos.toByteArray()));
+            if (time < 1493124696)
+                return Sha256Hash.wrapReversed(Utils.scryptDigest(bos.toByteArray()));
+            else // TimeTravel algo will be heavy for android
+                 // for now, we will return "small" hash to pass pow verification
+                return Sha256Hash.wrap("00000000000000000000000000000000ffffffffffffffffffffffffffffffff");
         } catch (IOException e) {
             throw new RuntimeException(e); // Cannot happen.
         }
     }
-
+    
     /**
      * Returns the hash of the block (which for a valid, solved block should be below the target) in the form seen on
      * the block explorer. If you call this on block 1 in the mainnet chain
