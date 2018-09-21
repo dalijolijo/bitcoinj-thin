@@ -38,33 +38,31 @@ public class TestNet3Params extends AbstractBitcoinNetParams {
     public TestNet3Params() {
         super();
         id = ID_TESTNET;
-        // Genesis hash is 000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943
-        packetMagic = 0x0b110907;
+        // BTX Genesis hash is 0x02c5d66e8edb49984eb743c798bca069466ce457b7febfa3c3a01b33353b7bc6
+        packetMagic = 0xfbd2c8f1; //BTX
         interval = INTERVAL;
         targetTimespan = TARGET_TIMESPAN;
-        maxTarget = Utils.decodeCompactBits(0x1d00ffffL);
-        port = 18333;
-        addressHeader = 111;
-        p2shHeader = 196;
+        maxTarget = Utils.decodeCompactBits(0x1e0ffff0L); //BTX
+        port = 8666; //BTX
+        addressHeader = 111; //BTX
+        p2shHeader = 196; //BTX
         acceptableAddressCodes = new int[] { addressHeader, p2shHeader };
-        dumpedPrivateKeyHeader = 239;
-        genesisBlock.setTime(1296688602L);
-        genesisBlock.setDifficultyTarget(0x1d00ffffL);
-        genesisBlock.setNonce(414098458);
-        spendableCoinbaseDepth = 100;
-        subsidyDecreaseBlockCount = 210000;
+        dumpedPrivateKeyHeader = 239; //BTX
+        genesisBlock.setTime(1493124695L); //BTX
+        genesisBlock.setDifficultyTarget(0x1e0ffff0L); //BTX
+        genesisBlock.setNonce(1728920); //BTX
+        spendableCoinbaseDepth = 100; // (?)
+        subsidyDecreaseBlockCount = 210000; //BTX
         String genesisHash = genesisBlock.getHashAsString();
-        checkState(genesisHash.equals("000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943"));
+        checkState(genesisHash.equals("02c5d66e8edb49984eb743c798bca069466ce457b7febfa3c3a01b33353b7bc6")); //BTX
 
         dnsSeeds = new String[] {
-                "testnet-seed.bitcoin.jonasschnelli.ch", // Jonas Schnelli
-                "testnet-seed.bluematt.me",              // Matt Corallo
-                "testnet-seed.bitcoin.petertodd.org",    // Peter Todd
-                "testnet-seed.bitcoin.schildbach.de",    // Andreas Schildbach
-        };
+                "188.68.52.172", 
+                "51.15.84.165",
+        }; //BTX
         addrSeeds = null;
-        bip32HeaderPub = 0x043587CF;
-        bip32HeaderPriv = 0x04358394;
+        bip32HeaderPub = 0x043587CF; //BTX
+        bip32HeaderPriv = 0x04358394; //BTX
 
         majorityEnforceBlockUpgrade = TestNet2Params.TESTNET_MAJORITY_ENFORCE_BLOCK_UPGRADE;
         majorityRejectBlockOutdated = TestNet2Params.TESTNET_MAJORITY_REJECT_BLOCK_OUTDATED;
@@ -85,7 +83,7 @@ public class TestNet3Params extends AbstractBitcoinNetParams {
     }
 
     // February 16th 2012
-    private static final Date testnetDiffDate = new Date(1329264000000L);
+    private static final Date testnetDiffDate = new Date(1329264000000L); // (?)
 
     @Override
     public void checkDifficultyTransitions(final StoredBlock storedPrev, final BtcBlock nextBlock,
