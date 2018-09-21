@@ -42,11 +42,11 @@ import static co.rsk.bitcoinj.core.Coin.*;
  */
 public abstract class NetworkParameters {
     /** The string returned by getId() for the main, production network where people trade things. */
-    public static final String ID_MAINNET = "org.bitcoin.production";
+    public static final String ID_MAINNET = "org.bitcore.production";
     /** The string returned by getId() for the testnet. */
-    public static final String ID_TESTNET = "org.bitcoin.test";
+    public static final String ID_TESTNET = "org.bitcore.test";
     /** The string returned by getId() for regtest mode. */
-    public static final String ID_REGTEST = "org.bitcoin.regtest";
+    public static final String ID_REGTEST = "org.bitcore.regtest";
     /** Unit test network. */
     public static final String ID_UNITTESTNET = "co.rsk.bitcoinj.unittest";
 
@@ -122,8 +122,8 @@ public abstract class NetworkParameters {
         return genesisBlock;
     }
 
-    public static final int TARGET_TIMESPAN = 14 * 24 * 60 * 60; // two weeks
-    public static final int TARGET_SPACING = 150; // = 2.5 * 60;
+    public static final int TARGET_TIMESPAN = 14 * 24 * 60 * 60; //BTX two weeks
+    public static final int TARGET_SPACING = 150; // = 2.5 * 60 BTX
     public static final int INTERVAL = TARGET_TIMESPAN / TARGET_SPACING;
     
     /**
@@ -136,7 +136,7 @@ public abstract class NetworkParameters {
     /**
      * The maximum number of coins to be generated
      */
-    public static final long MAX_COINS = 21000000;
+    public static final long MAX_COINS = 21000000; //BTX
 
     /**
      * The maximum money to be generated
@@ -150,10 +150,12 @@ public abstract class NetworkParameters {
     }
 
     /** Alias for TestNet2Params.get(), use that instead. */
+    /** BTX no TestNet2
     @Deprecated
     public static NetworkParameters testNet2() {
         return TestNet2Params.get();
     }
+    */
 
     /** Alias for TestNet3Params.get(), use that instead. */
     @Deprecated
@@ -450,10 +452,10 @@ public abstract class NetworkParameters {
     public abstract int getProtocolVersionNum(final ProtocolVersion version);
 
     public static enum ProtocolVersion {
-        MINIMUM(70002),
-        PONG(60000),
-        BLOOM_FILTER(70011),
-        CURRENT(70011); // 70012 will require support for "sendheaders" which we don't have
+        MINIMUM(70016), //BTX
+        PONG(60000), //BTX
+        BLOOM_FILTER(70011), //BTX
+        CURRENT(70011); // 70012 will require support for "sendheaders" which we don't have (??)
         
 
         private final int bitcoinProtocol;
