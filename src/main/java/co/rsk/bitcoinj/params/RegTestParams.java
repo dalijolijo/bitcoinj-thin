@@ -25,8 +25,8 @@ import static com.google.common.base.Preconditions.checkState;
 /**
  * Network parameters for the regression test mode of bitcoind in which all blocks are trivially solvable.
  */
-public class RegTestParams extends TestNet2Params {
-    private static final BigInteger MAX_TARGET = new BigInteger("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", 16);
+public class RegTestParams extends TestNet3Params {
+    private static final BigInteger MAX_TARGET = new BigInteger("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", 16); //BTX powLimit
 
     public RegTestParams() {
         super();
@@ -34,8 +34,8 @@ public class RegTestParams extends TestNet2Params {
         // By setting the block interval for difficulty adjustments to Integer.MAX_VALUE we make sure difficulty never changes.    
         interval = Integer.MAX_VALUE;
         maxTarget = MAX_TARGET;
-        subsidyDecreaseBlockCount = 150;
-        port = 18444;
+        subsidyDecreaseBlockCount = 150; //BTX
+        port = 19444; //BTX
         id = ID_REGTEST;
 
         majorityEnforceBlockUpgrade = MainNetParams.MAINNET_MAJORITY_ENFORCE_BLOCK_UPGRADE;
@@ -55,10 +55,10 @@ public class RegTestParams extends TestNet2Params {
         synchronized (RegTestParams.class) {
             if (genesis == null) {
                 genesis = super.getGenesisBlock();
-                genesis.setNonce(2);
-                genesis.setDifficultyTarget(0x207fFFFFL);
-                genesis.setTime(1296688602L);
-                checkState(genesis.getHashAsString().toLowerCase().equals("0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206"));
+                genesis.setNonce(9377); //BTX
+                genesis.setDifficultyTarget(0x1e0ffff0L); //BTX
+                genesis.setTime(1492973331L); //BTX
+                checkState(genesis.getHashAsString().toLowerCase().equals("604148281e5c4b7f2487e5d03cd60d8e6f69411d613f6448034508cea52e9574")); //BTX
             }
             return genesis;
         }
