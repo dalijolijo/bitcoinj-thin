@@ -65,7 +65,7 @@ public class BtcBlock extends Message {
      * upgrade everyone to change this, so Bitcoin can continue to grow. For now it exists as an anti-DoS measure to
      * avoid somebody creating a titanically huge but valid block and forcing everyone to download/store it forever.
      */
-    public static final int MAX_BLOCK_SIZE = 20 * 1000 * 1000; // 20Mb
+    public static final int MAX_BLOCK_SIZE = 20 * 1000 * 1000; //BTX 20Mb
     /**
      * A "sigop" is a signature verification operation. Because they're expensive we also impose a separate limit on
      * the number in a block to prevent somebody mining a huge block that has way more sigops than normal, so is very
@@ -74,20 +74,20 @@ public class BtcBlock extends Message {
     public static final int MAX_BLOCK_SIGOPS = MAX_BLOCK_SIZE / 50;
 
     /** A value for difficultyTarget (nBits) that allows half of all possible hash solutions. Used in unit testing. */
-    public static final long EASIEST_DIFFICULTY_TARGET = 0x207fFFFFL;
+    public static final long EASIEST_DIFFICULTY_TARGET = 0x1e0ffff0L; //BTX regtest
 
     /** Value to use if the block height is unknown */
     public static final int BLOCK_HEIGHT_UNKNOWN = -1;
     /** Height of the first block */
-    public static final int BLOCK_HEIGHT_GENESIS = 0;
+    public static final int BLOCK_HEIGHT_GENESIS = 0; //BTX
 
-    public static final long BLOCK_VERSION_GENESIS = 1;
+    public static final long BLOCK_VERSION_GENESIS = 1; //BTX
     /** Block version introduced in BIP 34: Height in coinbase */
-    public static final long BLOCK_VERSION_BIP34 = 2;
+    public static final long BLOCK_VERSION_BIP34 = 2; //BTX
     /** Block version introduced in BIP 66: Strict DER signatures */
-    public static final long BLOCK_VERSION_BIP66 = 2;
+    public static final long BLOCK_VERSION_BIP66 = 2; //BTX
     /** Block version introduced in BIP 65: OP_CHECKLOCKTIMEVERIFY */
-    public static final long BLOCK_VERSION_BIP65 = 2;
+    public static final long BLOCK_VERSION_BIP65 = 2; //BTX
 
     // Fields defined as part of the protocol format.
     private long version;
@@ -216,8 +216,8 @@ public class BtcBlock extends Message {
      * </p>
      */
     public Coin getBlockInflation(int height) {
-        Coin subsidy = COIN.times(125).divide(10); // 12.5 coins
-        Coin premine = COIN.times(162873375).divide(10); // 16287337.5 coins
+        Coin subsidy = COIN.times(125).divide(10); //BTX 12.5 coins
+        Coin premine = COIN.times(162873375).divide(10); //BTX 16287337.5 coins
 
         if (height == 1) {
             subsidy = premine;
@@ -425,9 +425,9 @@ public class BtcBlock extends Message {
             writeHeader(bos);
             if (time < 1493124696)
                 return Sha256Hash.wrapReversed(Utils.scryptDigest(bos.toByteArray()));
-            else // TimeTravel algo will be heavy for android
+            else //BTX: TimeTravel algo will be heavy for android
                  // for now, we will return "small" hash to pass pow verification
-                return Sha256Hash.wrap("00000000000000000000000000000000ffffffffffffffffffffffffffffffff");
+                return Sha256Hash.wrap("00000000000000000000000000000000ffffffffffffffffffffffffffffffff"); //BTX
         } catch (IOException e) {
             throw new RuntimeException(e); // Cannot happen.
         }
