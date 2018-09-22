@@ -455,7 +455,7 @@ public abstract class NetworkParameters {
         MINIMUM(70016), //BTX
         PONG(60000), //BTX
         BLOOM_FILTER(70011), //BTX
-        CURRENT(70011); // 70012 will require support for "sendheaders" which we don't have (??)
+        CURRENT(80000); // 70012 will require support for "sendheaders" which we don't have
         
 
         private final int bitcoinProtocol;
