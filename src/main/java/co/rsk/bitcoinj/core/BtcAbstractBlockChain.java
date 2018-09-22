@@ -637,7 +637,8 @@ public abstract class BtcAbstractBlockChain {
         synchronized (chainHeadLock) {
             long offset = height - chainHead.getHeight();
             long headTime = chainHead.getHeader().getTimeSeconds();
-            long estimated = (headTime * 1000) + (1000L * 60L * 10L * offset);
+            //long estimated = (headTime * 1000) + (1000L * 60L * 10L * offset); //BTC: block time 10 min
+            long estimated = (headTime * 1000) + (1000L * 60L * 2.5L * offset); //BTX: block time 2.5 min
             return new Date(estimated);
         }
     }
